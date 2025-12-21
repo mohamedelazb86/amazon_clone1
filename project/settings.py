@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # MY APPS
     'authuser',
+    'settings',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +62,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -176,3 +177,6 @@ JAZZMIN_SETTINGS = {
 
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,}
+
+LOGIN_URL='authuser:login'
+LOGOUT_REDIRECT_URL='/'
