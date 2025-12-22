@@ -37,11 +37,17 @@ class LoginView(View):
 
         return render(request,'authuser/login.html',{})
     
-class LogoutView(View):
-    def post(self,request):
-        logout(request)
-        messages.success(request,'مبرروك تم الخروج من النظام بنجاح')
-        return render(request,'authuser/login.html',{})
+# class LogoutView(View):
+#     def post(self,request):
+#         logout(request)
+#         messages.success(request,'مبرروك تم الخروج من النظام بنجاح')
+#         return redirect('authuser:login')
+def logoutview(request):
+    logout(request)
+    messages.success(request,'مبرروك تم الخروج من النظام بنجاح')
+    return redirect('authuser:login')
+
+
     
 @login_required    
 def all_user(request):
