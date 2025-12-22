@@ -10,5 +10,6 @@ urlpatterns = [
     path('all_user',login_required(views.all_user),name='all_user'),
     path('active_deactive/<int:id>/', views.active_deactive, name='active_deactive'),
     path('add_user',views.add_user,name='add_user'),
+    path('edit_user/<int:id>',views.edit_user,name='edit_user'),
 
 ]

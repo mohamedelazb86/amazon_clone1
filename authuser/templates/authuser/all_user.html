@@ -67,7 +67,7 @@
                             <td>{{ user.date_joined|date:"Y-m-d" }}</td>
                             <td>
                                 <!-- تعديل -->
-                                <a href="" class="btn btn-sm btn-warning" title="تعديل">
+                                <a href="{% url 'authuser:edit_user' user.id %}" class="btn btn-sm btn-warning" title="تعديل">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
 

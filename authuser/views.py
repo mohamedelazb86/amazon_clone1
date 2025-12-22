@@ -79,6 +79,7 @@ def add_user(request):
         job=request.POST.get('job')
         email=request.POST.get('email')
         phone=request.POST.get('phone')
+        image=request.FILES.get('image')
 
         if User.objects.filter(username=username).exists():
             messages.error(request,'معذرة هذا المستخدم موجود سابقا')
@@ -95,8 +96,33 @@ def add_user(request):
 
         )
         user.set_password(password)
+        user.image=image
         user.save()
         messages.success(request,'مبررروووك تم الحفظ بنحاج')
         return redirect('authuser:all_user')
 
     return render(request,'authuser/add_user.html',{})
+
+def edit_user(request,id):
+    user=User.objects.get(id=id)
+    if request.method == 'POST':
+        active=request.POST.get('is_active') == 'on'
+        full_name=request.POST.get('full_name')
+        job=request.POST.get('job')
+        phone=request.POST.get('job')
+        image=request.FILES.get('image')
+
+        user.is_active=active
+        user.full_name=full_name
+        user.job=job
+        user.phone=phone
+        user.image=image
+        user.save()
+        messages.success(request,'مبرووك تم التعديل بنجاح')
+        return redirect('authuser:all_user')
+
+
+    context={
+        'user':user
+    }
+    return render(request,'authuser/edit_user.html',context)
