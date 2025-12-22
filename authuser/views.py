@@ -67,3 +67,36 @@ def active_deactive(request,id):
         messages.success(request,'مبرروك تم تفعيل المستخدم بنجاح')
     user.save()
     return redirect('authuser:all_user')
+
+
+def add_user(request):
+    if request.method =='POST':
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+        
+        active = request.POST.get('is_active') == 'on'
+        full_name=request.POST.get('full_name')
+        job=request.POST.get('job')
+        email=request.POST.get('email')
+        phone=request.POST.get('phone')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request,'معذرة هذا المستخدم موجود سابقا')
+            return redirect('authuser:add_user')
+
+        user=User.objects.create(
+            username=username,
+            is_active=active,
+            is_staff=active,
+            full_name=full_name,
+            job=job,
+            email=email,
+            phone=phone
+
+        )
+        user.set_password(password)
+        user.save()
+        messages.success(request,'مبررروووك تم الحفظ بنحاج')
+        return redirect('authuser:all_user')
+
+    return render(request,'authuser/add_user.html',{})
