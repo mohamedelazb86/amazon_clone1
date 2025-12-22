@@ -126,3 +126,10 @@ def edit_user(request,id):
         'user':user
     }
     return render(request,'authuser/edit_user.html',context)
+
+def delete_user(request,id):
+    user=get_object_or_404(User,id=id)
+    user.delete()
+    messages.success(request,'تم الحذف بنحاج')
+    return redirect('authuser:all_user')
+    
