@@ -1,14 +1,18 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from .models import Product,Review,Product_Image
+from django.core.paginator import Paginator
 
 @login_required
 def all_product(request):
     products=Product.objects.all()
-
+    paginator = Paginator(products, 20)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     
     context={
-        'products':products
+        
+        "page_obj": page_obj
     }
     return render(request,'products/all_product.html',context)
 
