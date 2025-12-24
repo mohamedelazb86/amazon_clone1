@@ -43,7 +43,9 @@
                     <div class="col-lg-6">
                         <div class="details-gallery">
                             <div class="details-label-group">
-                                <label class="details-label new">{{product.flag}}</label>
+                                <label class="details-label new">
+                                    {{product.flag}}
+                                </label>
                                 <label class="details-label off">-10%</label>
                             </div>
                             <ul class="details-preview"> 
@@ -73,7 +75,7 @@
                               {% if previous_product %}
                                   <a href="{% url 'products:product_detail' previous_product %}">
                                     <i class="icofont-arrow-left"></i>
-                                    prev product
+                                    المنتج السابق
                                     <span class="product-nav-popup">
                                         <img src="{{previous_product.image.url}}" alt="product">
                                         <small>{{previous_product}}</small>
@@ -87,7 +89,7 @@
                                
                                {% if next_product %}
                                   <a href="{% url 'products:product_detail' next_product.slug %}">
-                                    next product
+                                    المنتج القادم
                                     <i class="icofont-arrow-right"></i>
                                     <span class="product-nav-popup">
                                         <img src="{{next_product.image.url}}" alt="product">
@@ -102,7 +104,7 @@
                             <h3 class="details-name"><a href="#">{{product.name}}</a></h3>
                             <div class="details-meta">
                                 <p>SKU:<span>{{product.sku}}</span></p>
-                                <p>BRAND:<a href="#">{{product.brand}}</a></p>
+                                <p>البراند:<a href="#">{{product.brand}}</a></p>
                             </div>
                             <div class="details-rating">
                                 <i class=" icofont-star {% if product.review_avg > 0 %} active {% endif %}"></i>
@@ -110,7 +112,7 @@
                                 <i class=" icofont-star {% if product.review_avg > 2 %} active {% endif %}"></i>
                                 <i class=" icofont-star {% if product.review_avg > 3 %} active {% endif %}"></i>
                                 <i class="icofont-star {% if product.review_avg > 4 %} active {% endif %}"></i>
-                                <a href="#">(3 reviews)</a>
+                                <a href="#">(التقيمات : - ({{product.review_count}})    )</a>
                             </div>
                             <h3 class="details-price">
                                 <del>$38.00</del>
@@ -129,7 +131,7 @@
                             <div class="details-list-group">
                                 <label class="details-list-title">Share:</label>
                                 <ul class="details-share-list">
-                                    <li><a href="#" class="icofont-facebook" title="Facebook"></a></li>
+                                    <li><a href="{{settings_data.facebook}}" class="icofont-facebook" title="Facebook"></a></li>
                                     <li><a href="#" class="icofont-twitter" title="Twitter"></a></li>
                                     <li><a href="#" class="icofont-linkedin" title="Linkedin"></a></li>
                                     <li><a href="#" class="icofont-instagram" title="Instagram"></a></li>
@@ -138,7 +140,7 @@
                             <div class="details-add-group">
                                 <button class="product-add" title="Add to Cart">
                                     <i class="fas fa-shopping-basket"></i>
-                                    <span>add to cart</span>
+                                    <span>إضافة إلى السلة</span>
                                 </button>
                                 <div class="product-action">
                                     <button class="action-minus" title="Quantity Minus"><i class="icofont-minus"></i></button>
@@ -149,7 +151,7 @@
                             <div class="details-action-group">
                                 <a class="details-wish wish" href="#" title="Add Your Wishlist">
                                     <i class="icofont-heart"></i>
-                                    <span>add to wish</span>
+                                    <span>إضافة إلى المفضلة</span>
                                 </a>
                               
                             </div>
@@ -282,15 +284,15 @@
                             </div>
                             <div class="product-content">
                                 <div class="product-rating">
-                                    <i class="active icofont-star"></i>
-                                    <i class="active icofont-star"></i>
-                                    <i class="active icofont-star"></i>
-                                    <i class="active icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <a href="product-video.html">({{item.review_count}})</a>
+                                    <i class=" icofont-star {% if item.review_avg > 0 %} active {% endif %}"></i>
+                                    <i class=" icofont-star {% if item.review_avg > 1 %} active {% endif %}"></i>
+                                    <i class=" icofont-star {% if item.review_avg > 2 %} active {% endif %}"></i>
+                                    <i class=" icofont-star {% if item.review_avg > 3 %} active {% endif %}"></i>
+                                    <i class="icofont-star {% if item.review_avg > 4 %} active {% endif %}"></i>
+                                    <a href="#">({{item.review_count}})</a>
                                 </div>
                                 <h6 class="product-name">
-                                    <a href="product-video.html">{{item.name}}</a>
+                                    <a href="{% url 'products:product_detail' item.slug %}">{{item.name}}</a>
                                 </h6>
                                 <h6 class="product-price">
                                     <del>$34</del>
