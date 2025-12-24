@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from authuser.models import User
 from django.utils import timezone
+from taggit.managers import TaggableManager
 
 FLAG_TYPE=[
     ('Sale','Sale'),
@@ -19,6 +20,7 @@ class Product(models.Model):
     subtitle=models.TextField(max_length=500)
     descriptions=models.TextField(max_length=5000)
     quantity=models.FloatField()
+    tags = TaggableManager()
 
     def __str__(self):
         return self.name

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # PACAKGE
     'django_summernote',
+    "taggit",
 
 
     # MY APPS
