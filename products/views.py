@@ -63,3 +63,17 @@ def all_brand(request):
     }
     return render(request,'products/all_brand.html',context)
 
+def brand_detail(request,slug):
+    brand=Brand.objects.get(slug=slug)
+
+    products=Product.objects.filter(brand=brand)
+    paginator = Paginator(products, 4)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context={
+        'brand':brand,
+        'page_obj':page_obj
+    }
+    return render(request,'products/brand_detail.html',context)
+
