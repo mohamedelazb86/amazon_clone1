@@ -67,6 +67,12 @@ class Brand(models.Model):
     image=models.ImageField(upload_to='image_brand')
     slug=models.SlugField(null=True,blank=True)
 
+    @property
+    def product_count(self):
+        productcount=self.product_product.all().count()
+        return productcount
+
+
     def __str__(self):
         return self.name
     
