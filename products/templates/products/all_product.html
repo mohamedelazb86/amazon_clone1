@@ -379,9 +379,9 @@
                                             <div class="product-label">
                                                 <label class="label-text new">{{object.flag}}</label>
                                             </div>
-                                            <button class="product-wish wish">
+                                            <a href="{% url 'products:add_favorite' object.id %}" class="product-wish wish">
                                                 <i class="fas fa-heart"></i>
-                                            </button>
+                                            </a>
                                             <a class="product-image" href="{% url 'products:product_detail' object.slug %}">
                                                 <img src="{{object.image.url}}" alt="product">
                                             </a>

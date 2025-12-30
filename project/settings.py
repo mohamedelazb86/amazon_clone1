@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'authuser',
     'settings',
     'products',
+    'order',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -72,7 +74,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'settings.settings_context_process.get_context_process'
+                'settings.settings_context_process.get_context_process',
+                'products.get_context_process.get_favorite',
+                'order.get_context_process.get_context_process'
             ],
         },
     },

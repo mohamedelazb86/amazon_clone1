@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Settings
+from .models import Settings,Address,Delivery_Fee,Location
 from django_summernote.admin import SummernoteModelAdmin
 
 class SettingAdmin(SummernoteModelAdmin):
@@ -12,3 +12,7 @@ class SettingAdmin(SummernoteModelAdmin):
 
 
 admin.site.register(Settings,SettingAdmin)
+admin.site.register(Address)
+admin.site.register(Delivery_Fee)
+admin.site.register(Location)
+

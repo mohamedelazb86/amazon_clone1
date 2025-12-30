@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Product,Review,Product_Image,Brand
+from .models import Product,Review,Product_Image,Brand,Favorite
 from django.core.paginator import Paginator
+from order.models import Cart,Cart_Detail
 
 @login_required
 def all_product(request):
@@ -49,6 +51,23 @@ def add_review(request,slug):
             rate=rate
         )
         return redirect('products:product_detail',slug=slug)
+def add_favorite(request,id):
+    product=get_object_or_404(Product,id=id)
+
+    favorite ,created=Favorite.objects.get_or_create(user=request.user,product=product)
+
+    if not created:
+        favorite.delete()
+    
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def wish_all(request):
+    products=Favorite.objects.filter(user=request.user)
+    context={
+        'products':products
+    }
+    return render(request,'products/wish_all.html',context)
+
 
 
 # Brand
@@ -76,4 +95,25 @@ def brand_detail(request,slug):
         'page_obj':page_obj
     }
     return render(request,'products/brand_detail.html',context)
+
+def add_to_cart(request):
+    cart=Cart.objects.get(user=request.user,status='inprogress')
+
+    product_id=request.POST.get('id')
+    product=Product.objects.get(id=product_id)
+
+    quantity=float(request.POST.get('quantity'))
+
+    # انشاء تفاصيل الكارت أو احضاءر الموجودة سابقا
+    cart_detail , created = Cart_Detail.objects.get_or_create(cart=cart,product=product)
+
+    cart_detail.quantity=quantity
+    cart_detail.total=cart_detail.quantity * product.price
+    cart_detail.save()
+
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+
+
 

@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    الأوردرات
+{% endblock title %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/orderlist.css' %}">
+{% endblock css %}
+    
+
+{% block body %}
+    
+        
+        <!--=====================================
+                    BANNER PART START
+        =======================================-->
+        <section class="inner-section single-banner" style="background: url(images/single-banner.jpg) no-repeat center;">
+            <div class="container">
+                <h2>Order History</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Orderlist</li>
+                </ol>
+            </div>
+        </section>
+        <!--=====================================
+                    BANNER PART END
+        =======================================-->
+
+
+        <!--=====================================
+                    ORDERLIST PART START
+        =======================================-->
+        <section class="inner-section orderlist-part">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="orderlist-filter">
+                            <h5>total order <span>- (4)</span></h5>
+                            <div class="filter-short">
+                                <label class="form-label">short by:</label>
+                                <select class="form-select">
+                                    <option value="all" selected>all order</option>
+                                    <option value="recieved">recieved order</option>
+                                    <option value="processed">processed order</option>
+                                    <option value="shipped">shipped order</option>
+                                    <option value="delivered">delivered order</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                    
+                    {% for order in page_obj %}
+                      
+                        <div class="orderlist">
+                            <div class="orderlist-head">
+                                <h5>order{{forloop.counter}}</h5>
+                                <h5>order {{order.status}}</h5>
+                            </div>
+                            <div class="orderlist-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="order-track">
+                                            <ul class="order-track-list">
+                                                <li class="order-track-item {% if order.status == 'recieved' or order.status == 'processed' or order.status == 'shipped' or order.status == 'delivered' %} active {% endif %}">
+                                                    <i class="icofont-{% if order.status == 'recieved' or order.status == 'processed' or order.status == 'shipped' or order.status == 'delivered' %}check{% else %}close{% endif %}"></i>
+                                                    <span>order recieved</span>
+                                                </li>
+                                                <li class="order-track-item {% if order.status == 'processed' or order.status == 'shipped' or order.status == 'delivered' %} active {% endif %}">
+                                                    <i class="icofont-{% if order.status == 'processed' or order.status == 'shipped' or order.status == 'delivered' %}check{% else %}close{% endif %}"></i>
+                                                    <span>order processed</span>
+                                                </li>
+                                                <li class="order-track-item {% if order.status == 'shipped' or order.status == 'delivered' %} active {% endif %}">
+                                                    <i class="icofont-{% if order.status == 'shipped' or order.status == 'delivered' %}check{% else %}close{% endif %}"></i>
+                                                    <span>order shipped</span>
+                                                </li>
+                                                <li class="order-track-item {% if order.status == 'delivered' %} active {% endif %}">
+                                                    <i class="icofont-{% if order.status == 'delivered' %}check{% else %}close{% endif %}"></i>
+                                                    <span>order delivered</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <ul class="orderlist-details">
+                                            <li>
+                                                <h6>كود الطلب</h6>
+                                                <p>{{order.code}}</p>
+                                            </li>
+                                            <li>
+                                                <h6>إجمالى العناصر</h6>
+                                                <p>{{order.order_detail_count}} Items</p>
+                                            </li>
+                                            <li>
+                                                <h6>وقت الطلب</h6>
+                                                <p>{{order.order_time}}</p>
+                                            </li>
+                                            <li>
+                                                <h6>وقت الوصول</h6>
+                                                
+                                                {% if order.delivery_time %}
+                                                     <p>{{order.delivery_time}}</p>
+                                                {% else %}
+                                                <p class="text-danger">غير معلوم</p>
+                                                {% endif %}
+                                                    
+                                               
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <ul class="orderlist-details">
+                                            <li>
+                                                <h6>Sub Total</h6>
+                                                <p>$10,864.00</p>
+                                            </li>
+                                            <li>
+                                                <h6>discount</h6>
+                                                <p>$20.00</p>
+                                            </li>
+                                            <li>
+                                                <h6>delivery fee</h6>
+                                                <p>$49.00</p>
+                                            </li>
+                                            <li>
+                                                <h6>Total<small>(Incl. VAT)</small></h6>
+                                                <p>$10,874.00</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="orderlist-deliver">
+                                            <h6>موقع العميل</h6>
+                                            <p>{{order.delivery_address.address}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="table-scroll">
+                                            <table class="table-list">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">التسلسل</th>
+                                                        <th scope="col">صورة المنتج</th>
+                                                        <th scope="col">المنتج</th>
+                                                        <th scope="col">السعر</th>
+                                                        <th scope="col">البراند</th>
+                                                        <th scope="col">الكمية</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                
+                                                {% for item in order.order_detail.all %}
+                                                   <tr>
+                                                        <td class="table-serial"><h6>{{forloop.counter}}</h6></td>
+                                                        <td class="table-image"><img src="{{item.product.image.url}}" alt="product"></td>
+                                                        <td class="table-name"><h6>{{item.product.name}}</h6></td>
+                                                        <td class="table-price"><h6>${{item.price}}<small>/kilo</small></h6></td>
+                                                        <td class="table-brand"><h6>{{item.product.brand}}</h6></td>
+                                                        <td class="table-quantity"><h6>{{item.quantity}}</h6></td>
+                                                    </tr>
+                                                 {% endfor %}
+                                                
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                   
+
+                    </div>
+                </div>
+            
+            {% if page_obj %}
+               
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="pagination">
+                        
+                            
+                            {% if page_obj.has_previous %}
+                                   <li class="page-item">
+                                    <a class="page-link" href="?page={{page_obj.previous_page_number}}">
+                                        <i class="icofont-arrow-right"></i>
+                                    </a>
+                                </li> 
+                            {% endif %}
+                                
+                            
+
+                            <li class="page-item"><a class="page-link active" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">...</li>
+                            <li class="page-item"><a class="page-link" href="#">65</a></li>
+                            
+                            {% if page_obj.has_next %} 
+                               <li class="page-item">
+                                    <a class="page-link" href="?page={{page_obj.next_page_number}}"> 
+                                        <i class="icofont-arrow-left"></i>
+                                    </a>
+                                 </li>  
+                            {% endif %}
+                                
+                           
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+
+            </div>
+        </section>
+        <!--=====================================
+                    ORDERLIST PART END
+        =======================================-->
+
+
+{% endblock body %}
+    
+
+{% block js %}
+    
+{% endblock js %}
+    

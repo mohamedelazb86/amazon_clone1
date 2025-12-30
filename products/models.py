@@ -47,6 +47,25 @@ class Product(models.Model):
         else:
             avg = 0
         return avg
+    
+class Favorite(models.Model):
+    user=models.ForeignKey(User,related_name='favorite_user',on_delete=models.CASCADE)
+    product=models.ForeignKey(Product,related_name='favorite_product',on_delete=models.CASCADE)
+    created_at=models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        unique_together =('user','product')   #   نفس المنتج ونفس المستخدم  منع حدوث التكرار
+
+    # class Meta:
+    #     constraints = [
+    #         models.UniqueConstraint(
+    #             fields=['user', 'product'],
+    #             name='unique_user_product'
+    #         )
+    #     ]
+    
+    def __str__(self):
+        return str(self.product)
         
          
 
